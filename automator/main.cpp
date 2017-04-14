@@ -54,9 +54,7 @@ int main(int, char const**)
 {
 	std::cout <<"hello";
 	
-	/*sf::Vertex (sf::Vector2f (xWinDiv10*i, yWinDiv10*i+1)),
-	sf::Vertex(sf::Vector2f(xWinDiv10*10, xWinDiv10*i+1))
-	*/
+	
     sf::RenderWindow window(sf::VideoMode(700, 700), "SFML window");
 	size_t max = 100;
 	window.setFramerateLimit(60);
@@ -92,13 +90,18 @@ int main(int, char const**)
 	}
 	*/
 	
+	Grid grid{};
+	auto array = grid.pointToDraw();
 	
+	for(size_t m =0; m < array.getVertexCount(); m++){
+		array[m].color = sf::Color::Black;
+	}
 	while (window.isOpen()) {
 		checkEvent(window);
 		
 		
-		window.clear(sf::Color::Black);
-		//window.draw();
+		window.clear(sf::Color::White);
+		window.draw(array);
 		window.display();
 		
 		
