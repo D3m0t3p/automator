@@ -13,6 +13,7 @@
 		557FBF8D1EA034FD00558E8D /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 557FBF8C1EA034FD00558E8D /* nice_music.ogg */; };
 		557FBF8F1EA034FD00558E8D /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 557FBF8E1EA034FD00558E8D /* sansation.ttf */; };
 		557FBF911EA034FD00558E8D /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 557FBF901EA034FD00558E8D /* icon.png */; };
+		557FBF991EA0532700558E8D /* Grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 557FBF971EA0532700558E8D /* Grid.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,8 @@
 		557FBF8C1EA034FD00558E8D /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
 		557FBF8E1EA034FD00558E8D /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		557FBF901EA034FD00558E8D /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		557FBF971EA0532700558E8D /* Grid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Grid.cpp; sourceTree = "<group>"; };
+		557FBF981EA0532700558E8D /* Grid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Grid.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +44,8 @@
 		557FBF751EA034FC00558E8D = {
 			isa = PBXGroup;
 			children = (
+				557FBF971EA0532700558E8D /* Grid.cpp */,
+				557FBF981EA0532700558E8D /* Grid.hpp */,
 				557FBF811EA034FC00558E8D /* automator */,
 				557FBF801EA034FC00558E8D /* Products */,
 			);
@@ -173,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557FBF991EA0532700558E8D /* Grid.cpp in Sources */,
 				557FBF881EA034FD00558E8D /* main.cpp in Sources */,
 				557FBF851EA034FD00558E8D /* ResourcePath.mm in Sources */,
 			);
@@ -272,6 +278,7 @@
 		557FBF951EA034FD00558E8D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "automator/automator-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -281,6 +288,7 @@
 		557FBF961EA034FD00558E8D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "automator/automator-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
