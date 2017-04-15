@@ -17,32 +17,40 @@
 #include <array>
 
 class Grid {
+	
+public:
 	enum State{
 		DEAD,
 		ALIVE
 	};
 	
-	std::array<std::array<State, 100>, 100> m_grid;
-	std::pair<sf::Vector2i, Grid::State> m_transformationToApply;
 	
 
-public:
+
+	
 	Grid();
 	void setCooState(const size_t& x, const size_t& y, Grid::State state);
+	
+	void setIndexState(const sf::Vector2i & position, Grid::State state);
 	void setIndexState(const size_t& x, const size_t& y, Grid::State state);
 	
 	sf::Vector2f getCooFromIndex(const size_t& x, const size_t& y) const; // return top left
 	sf::Vector2i getIndexFromCoo(const sf::Vector2f& position) const;
 	
 	bool isAlive(const sf::Vector2i& position) const;
-	bool isAlive(const size_t &x, const size_t &y)const ;
+	bool isAlive(const long long int &x, const long long int &y)const ;
 	
-	int countNeibourg(const size_t &x, const size_t & y) const ;
-	int countNeibourg(const sf::Vector2i & position) const;
+	size_t countNeighbours(const size_t &x, const size_t & y) const ;
+	size_t countNeighbours(const sf::Vector2i & position) const;
 	
+	void computeNextIteration();
+	void commitChange();
 	const sf::VertexArray pointToDraw();
 	
+private:
 	
+	std::array<std::array<State, 100>, 100> m_grid;
+	std::vector<std::pair<sf::Vector2i, Grid::State>> m_transformationToApply; //posittion, next State after rules
 };
 
 #endif /* Grid_hpp */

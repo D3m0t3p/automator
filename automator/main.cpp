@@ -93,15 +93,34 @@ int main(int, char const**)
 	Grid grid{};
 	auto array = grid.pointToDraw();
 	
-	for(size_t m =0; m < array.getVertexCount(); m++){
-		array[m].color = sf::Color::Black;
-	}
+	/*for(auto i = 0; i< 10; i++){
+		
+		grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
+		grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
+		grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
+		
+		
+
+	}*/
+	
+	
+//	grid.setIndexState(90, 90, Grid::State::ALIVE);
+//	grid.setIndexState(90, 91, Grid::State::ALIVE);
+//	grid.setIndexState(91, 90, Grid::State::ALIVE);
+//
+//	grid.setIndexState(91, 89, Grid::State::ALIVE);
+
 	while (window.isOpen()) {
+		
 		checkEvent(window);
 		
+		auto array = grid.pointToDraw();
+		auto a = grid.countNeighbours(91, 91);
 		
 		window.clear(sf::Color::White);
 		window.draw(array);
+		grid.computeNextIteration();
+		grid.commitChange();
 		window.display();
 		
 		

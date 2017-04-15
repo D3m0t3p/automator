@@ -16,11 +16,8 @@ Grid::Grid(){
 			
 		}
 	}
-	m_grid.at(10).at(10) = Grid::State::ALIVE;
-	m_grid.at(11).at(11) = Grid::State::ALIVE;
-	m_grid.at(0).at(0) = Grid::State::ALIVE;
-	m_grid.at(99).at(99) = Grid::State::ALIVE;
-
+		
+	m_transformationToApply = std::vector<std::pair<sf::Vector2i,Grid::State>>();
 
 
 }
@@ -34,6 +31,9 @@ void Grid::setCooState(const size_t& x, const size_t& y, Grid::State state){
 
 void Grid::setIndexState(const size_t& x, const size_t& y, Grid::State state){
 	m_grid.at(y).at(x) = state;
+}
+void Grid::setIndexState(const sf::Vector2i & position, Grid::State state){
+	setIndexState(position.x, position.y, state);
 }
 
 
@@ -61,10 +61,10 @@ const sf::VertexArray Grid::pointToDraw(){
 		for(auto column =0; column< 100; column++){
 			if(isAlive(column, line) ){
 				auto topLeft = getCooFromIndex(column, line);
-				array.append(sf::Vertex(topLeft) );
-				array.append(sf::Vertex(sf::Vector2f(topLeft.x+7,topLeft.y)));
-				array.append(sf::Vertex(sf::Vector2f(topLeft.x+7,topLeft.y+7)));
-				array.append(sf::Vertex(sf::Vector2f(topLeft.x,topLeft.y+7)));
+				array.append(sf::Vertex(topLeft, sf::Color::Black) );
+				array.append(sf::Vertex(sf::Vector2f(topLeft.x+7,topLeft.y), sf::Color::Black));
+				array.append(sf::Vertex(sf::Vector2f(topLeft.x+7,topLeft.y+7), sf::Color::Black));
+				array.append(sf::Vertex(sf::Vector2f(topLeft.x,topLeft.y+7), sf::Color::Black));
 				
 			}
 		}
@@ -76,19 +76,82 @@ const sf::VertexArray Grid::pointToDraw(){
 
 
 bool Grid::isAlive(const sf::Vector2i& position) const{
-	return m_grid.at(position.y).at(position.x) == Grid::State::ALIVE ;
+	return isAlive(position.x, position.y);
 }
-bool Grid::isAlive(const size_t &x, const size_t &y) const{
-	return m_grid.at(y).at(x) == Grid::State::ALIVE ;
+
+bool Grid::isAlive(const long long int &x, const long long int &y) const{
+	try {
+		return m_grid.at(y).at(x) == Grid::State::ALIVE ;
+		
+	} catch (std::out_of_range& e) {
+		return true;
+	}
 }
 
 
-int Grid::countNeibourg(const size_t &x, const size_t & y) const {
+size_t Grid::countNeighbours(const size_t &x, const size_t & y) const {
+	
+	
+	int cpt = 0;
+	int loop1 = 0;
+	int loop2 = 0;
+
+	for(int i = x-1; i < (x+2); i++ ){
+		loop1++;
+		for(int j = y-1; j < (y+2); j++){
+			loop2++;
+			if(isAlive(i, j))
+				cpt++;
+				
+				
+		}
+	}
+	if(isAlive(x, y))
+		cpt--;
+	
+	return cpt;
+	
 	
 }
 
 
 
-int Grid::countNeibourg(const sf::Vector2i & position) const{
+size_t Grid::countNeighbours(const sf::Vector2i & position) const{
 	
+	return countNeighbours(position.x, position.y);
+}
+
+
+void Grid::computeNextIteration(){
+	
+	m_transformationToApply.erase(m_transformationToApply.begin(), m_transformationToApply.end());
+	
+	for(size_t i=0;i < 100; i++){
+		for(size_t j=0; j < 100; j++){
+			
+			auto neighbours = countNeighbours(i, j);
+			
+			if(isAlive(i, j)){
+				
+				if(neighbours < 2)
+					m_transformationToApply.push_back(std::pair<sf::Vector2i,Grid::State>(sf::Vector2i(i,j), Grid::State::DEAD));
+				if(neighbours == 2 or neighbours == 3)
+					;
+				
+				if(neighbours > 3)
+					m_transformationToApply.push_back(std::pair<sf::Vector2i,Grid::State>(sf::Vector2i(i,j), Grid::State::DEAD));
+			}
+			else
+				if(neighbours == 3)
+					m_transformationToApply.push_back(std::pair<sf::Vector2i,Grid::State>(sf::Vector2i(i,j), Grid::State::ALIVE));
+		}
+	}
+}
+
+void Grid::commitChange(){
+	
+	for(const auto&p : m_transformationToApply){
+		setIndexState(p.first, p.second);
+	}
+	m_transformationToApply.erase(m_transformationToApply.begin(), m_transformationToApply.end());
 }
