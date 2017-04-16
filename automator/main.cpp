@@ -20,14 +20,17 @@
 
 std::random_device rd;
 
-void checkEvent(sf::RenderWindow &window){
+void checkEvent(sf::RenderWindow &window, Grid& grid){
 	sf::Event event;
 	while (window.pollEvent(event)) {
 		switch (event.type){
 			case sf::Event::Closed :
 				window.close();
 				break;
-			
+			case sf::Event::MouseButtonPressed:
+				grid.computeNextIteration();
+				grid.commitChange();
+				
 			default:
 				std::cout <<"i don't care";
 		}
@@ -91,8 +94,7 @@ int main(int, char const**)
 	*/
 	
 	Grid grid{};
-	auto array = grid.pointToDraw();
-	
+	auto v = grid.countNeighbours(0, 0);
 	/*for(auto i = 0; i< 10; i++){
 		
 		grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
@@ -102,25 +104,62 @@ int main(int, char const**)
 		
 
 	}*/
+	/*int z = 45;
+	while(z--){
+		auto a = randomInt(0, 99);
+		auto b = randomInt(0, 99);
+
+		grid.setIndexState(a,b, Grid::State::ALIVE);
+		grid.setIndexState(a,b+1, Grid::State::ALIVE);
+		grid.setIndexState(a+1,b, Grid::State::ALIVE);
+		grid.setIndexState(a,b-1, Grid::State::ALIVE);
+	}
+	
+*/
+//	grid.setIndexState(70,70, Grid::State::ALIVE);
+//	grid.setIndexState(71,71, Grid::State::ALIVE);
+//	grid.setIndexState(71,72, Grid::State::ALIVE);
+//	grid.setIndexState(70,72, Grid::State::ALIVE);
+//	grid.setIndexState(69,72, Grid::State::ALIVE);
+
+
+
+	/*
+	 ...***
+	 ...*..***
+	 ....*.*
+	 **.......*
+	 *.*....*..*
+	 *........**
+	 .**
+	 .*..*.....*.**
+	 .*.........**.*
+	 ...*.*......**..*
+	 ....**.*....**...*
+	 ........*.......*
+	 .......****...*.*
+	 .......*.**...****
+	 ........*...**.*
+	 .............**
+	 .........*.***
+	 ..........*..*
+	 
+	 */
 	
 	
-//	grid.setIndexState(90, 90, Grid::State::ALIVE);
-//	grid.setIndexState(90, 91, Grid::State::ALIVE);
-//	grid.setIndexState(91, 90, Grid::State::ALIVE);
-//
-//	grid.setIndexState(91, 89, Grid::State::ALIVE);
+	
 
 	while (window.isOpen()) {
 		
-		checkEvent(window);
+		checkEvent(window,grid);
 		
 		auto array = grid.pointToDraw();
 		auto a = grid.countNeighbours(91, 91);
 		
 		window.clear(sf::Color::White);
 		window.draw(array);
-		grid.computeNextIteration();
-		grid.commitChange();
+		//grid.computeNextIteration();
+		//grid.commitChange();
 		window.display();
 		
 		

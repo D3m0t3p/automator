@@ -40,7 +40,7 @@ public:
 	bool isAlive(const sf::Vector2i& position) const;
 	bool isAlive(const long long int &x, const long long int &y)const ;
 	
-	size_t countNeighbours(const size_t &x, const size_t & y) const ;
+	size_t countNeighbours(const long long int &x, const long long int & y) const ;
 	size_t countNeighbours(const sf::Vector2i & position) const;
 	
 	void computeNextIteration();

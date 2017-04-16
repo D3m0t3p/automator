@@ -80,16 +80,18 @@ bool Grid::isAlive(const sf::Vector2i& position) const{
 }
 
 bool Grid::isAlive(const long long int &x, const long long int &y) const{
+	if(x < 0 || y < 0)
+		return true;
 	try {
 		return m_grid.at(y).at(x) == Grid::State::ALIVE ;
 		
 	} catch (std::out_of_range& e) {
-		return true;
+		return true; //hors du cadre, considérer comme vivant
 	}
 }
 
 
-size_t Grid::countNeighbours(const size_t &x, const size_t & y) const {
+size_t Grid::countNeighbours(const long long int &x, const long long int & y) const {
 	
 	
 	int cpt = 0;
@@ -97,6 +99,7 @@ size_t Grid::countNeighbours(const size_t &x, const size_t & y) const {
 	int loop2 = 0;
 
 	for(int i = x-1; i < (x+2); i++ ){
+		
 		loop1++;
 		for(int j = y-1; j < (y+2); j++){
 			loop2++;
