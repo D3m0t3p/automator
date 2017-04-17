@@ -20,7 +20,8 @@
 
 std::random_device rd;
 
-void checkEvent(sf::RenderWindow &window, Grid& grid){
+template <size_t n>
+void checkEvent(sf::RenderWindow &window, Grid<n>& grid){
 	sf::Event event;
 	while (window.pollEvent(event)) {
 		switch (event.type){
@@ -93,7 +94,7 @@ int main(int, char const**)
 	}
 	*/
 	
-	Grid grid{};
+	Grid<100> grid{};
 	auto v = grid.countNeighbours(0, 0);
 	/*for(auto i = 0; i< 10; i++){
 		

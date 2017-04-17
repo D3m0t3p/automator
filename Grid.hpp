@@ -16,6 +16,8 @@
 #include <vector>
 #include <array>
 
+template <size_t n>
+
 class Grid {
 	
 public:
@@ -49,8 +51,9 @@ public:
 	
 private:
 	
-	std::array<std::array<State, 100>, 100> m_grid;
+	std::array<std::array<State, n>, n> m_grid;
 	std::vector<std::pair<sf::Vector2i, Grid::State>> m_transformationToApply; //posittion, next State after rules
 };
+#include "Grid.tpp"
 
 #endif /* Grid_hpp */

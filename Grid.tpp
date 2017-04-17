@@ -8,7 +8,9 @@
 
 #include "Grid.hpp"
 
-Grid::Grid(){
+template <size_t n>
+
+Grid<n>::Grid(){
 	m_grid = std::array<std::array<Grid::State, 100>, 100>();
 	for(auto &a : m_grid){
 		for(auto&state : a){
@@ -24,20 +26,25 @@ Grid::Grid(){
 
 
 
-
-void Grid::setCooState(const size_t& x, const size_t& y, Grid::State state){
+template <size_t n>
+void Grid<n>::setCooState(const size_t& x, const size_t& y, Grid::State state){
 	m_grid.at(y/100).at(x/100) = state;
 }
 
-void Grid::setIndexState(const size_t& x, const size_t& y, Grid::State state){
+template <size_t n>
+void Grid<n>::setIndexState(const size_t& x, const size_t& y, Grid::State state){
 	m_grid.at(y).at(x) = state;
 }
-void Grid::setIndexState(const sf::Vector2i & position, Grid::State state){
+
+template <size_t n>
+
+void Grid<n>::setIndexState(const sf::Vector2i & position, Grid::State state){
 	setIndexState(position.x, position.y, state);
 }
 
+template <size_t n>
 
-sf::Vector2f Grid::getCooFromIndex(const size_t& x, const size_t& y)const{
+sf::Vector2f Grid<n>::getCooFromIndex(const size_t& x, const size_t& y)const{
 	
 	if(x >= 100 or y >= 100)
 		throw std::out_of_range("x or y is too big");
@@ -46,14 +53,16 @@ sf::Vector2f Grid::getCooFromIndex(const size_t& x, const size_t& y)const{
 	
 }
 
+template <size_t n>
 
-sf::Vector2i Grid::getIndexFromCoo(const sf::Vector2f& position)const{
+sf::Vector2i Grid<n>::getIndexFromCoo(const sf::Vector2f& position)const{
 	
 	return sf::Vector2i (position.x/7, position.y/ 7);
 }
 
+template <size_t n>
 
-const sf::VertexArray Grid::pointToDraw(){
+const sf::VertexArray Grid<n>::pointToDraw(){
 	
 	sf::VertexArray array(sf::Quads);
 	
@@ -74,12 +83,13 @@ const sf::VertexArray Grid::pointToDraw(){
 
 
 
-
-bool Grid::isAlive(const sf::Vector2i& position) const{
+template <size_t n>
+bool Grid<n>::isAlive(const sf::Vector2i& position) const{
 	return isAlive(position.x, position.y);
 }
 
-bool Grid::isAlive(const long long int &x, const long long int &y) const{
+template <size_t n>
+bool Grid<n>::isAlive(const long long int &x, const long long int &y) const{
 	if(x < 0 || y < 0)
 		return true;
 	try {
@@ -90,8 +100,8 @@ bool Grid::isAlive(const long long int &x, const long long int &y) const{
 	}
 }
 
-
-size_t Grid::countNeighbours(const long long int &x, const long long int & y) const {
+template <size_t n>
+size_t Grid<n>::countNeighbours(const long long int &x, const long long int & y) const {
 	
 	
 	int cpt = 0;
@@ -118,14 +128,14 @@ size_t Grid::countNeighbours(const long long int &x, const long long int & y) co
 }
 
 
-
-size_t Grid::countNeighbours(const sf::Vector2i & position) const{
+template <size_t n>
+size_t Grid<n>::countNeighbours(const sf::Vector2i & position) const{
 	
 	return countNeighbours(position.x, position.y);
 }
 
-
-void Grid::computeNextIteration(){
+template <size_t n>
+void Grid<n>::computeNextIteration(){
 	
 	m_transformationToApply.erase(m_transformationToApply.begin(), m_transformationToApply.end());
 	
@@ -151,7 +161,8 @@ void Grid::computeNextIteration(){
 	}
 }
 
-void Grid::commitChange(){
+template <size_t n>
+void Grid<n>::commitChange(){
 	
 	for(const auto&p : m_transformationToApply){
 		setIndexState(p.first, p.second);
