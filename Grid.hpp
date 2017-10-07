@@ -16,7 +16,7 @@
 #include <vector>
 #include <array>
 
-template <size_t n>
+template <long long int n>
 
 class Grid {
 	
@@ -30,7 +30,8 @@ public:
 
 
 	
-	Grid();
+	Grid (long long int xWin, long long int yWin);
+	
 	void setCooState(const size_t& x, const size_t& y, Grid::State state);
 	
 	void setIndexState(const sf::Vector2i & position, Grid::State state);
@@ -53,6 +54,7 @@ private:
 	
 	std::array<std::array<State, n>, n> m_grid;
 	std::vector<std::pair<sf::Vector2i, Grid::State>> m_transformationToApply; //posittion, next State after rules
+	long long int xMax, yMax;
 };
 #include "Grid.tpp"
 

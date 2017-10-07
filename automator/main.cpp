@@ -20,7 +20,7 @@
 
 std::random_device rd;
 
-template <size_t n>
+template <long long int  n>
 void checkEvent(sf::RenderWindow &window, Grid<n>& grid){
 	sf::Event event;
 	while (window.pollEvent(event)) {
@@ -40,16 +40,16 @@ void checkEvent(sf::RenderWindow &window, Grid<n>& grid){
 
 long long int randomInt(long long int min, long long int max){
 	
- 
+	
 	std::default_random_engine e1(rd());
 	std::uniform_int_distribution<long long int> uniform_dist(min, max);
 	return uniform_dist(e1);
 }
 
 long long int randomFloat(){
-
+	
 	std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-	 std::uniform_real_distribution<> dis(0, 1);
+	std::uniform_real_distribution<> dis(0, 1);
 	return dis(gen);
 }
 
@@ -59,72 +59,75 @@ int main(int, char const**)
 	std::cout <<"hello";
 	
 	
-    sf::RenderWindow window(sf::VideoMode(700, 700), "SFML window");
-	size_t max = 100;
+	sf::RenderWindow window(sf::VideoMode(700, 700), "SFML window");
+	//size_t max = 100;
 	window.setFramerateLimit(60);
 	
 	/*
-	//les lignes
-	sf::VertexArray linesH(sf::Lines, max );
-	sf::VertexArray linesV(sf::Lines, max );
+	 //les lignes
+	 sf::VertexArray linesH(sf::Lines, max );
+	 sf::VertexArray linesV(sf::Lines, max );
+	 
+	 for(unsigned int i = 0; i< max; i++){
+	 if(i%2 == 0)
+	 linesH[i].position = sf::Vector2f(0, i*7+1);
+	 else
+	 linesH[i].position = sf::Vector2f(700, (i-1)*7+1);
+	 }
+	 
+	 for(unsigned int i = 0; i< max; i++){
+	 if(i%2 == 0)
+	 linesV[i].position = sf::Vector2f(i*window.getSize().x/100+1, 0 );
+	 else
+	 linesV[i].position = sf::Vector2f((i-1)*window.getSize().x/100+1, window.getSize().y );
+	 }
+	 //TODO: vertexArray from squares;
+	 
+	 
+	 
+	 //std::vector<std::pair<sf::Vector2f coordinate top left, size_t size of square>> squares;
+	 
+	 for(size_t y = 0; y < window.getSize().x/7+1; y++){
+	 for(size_t x = 0; x < window.getSize().x/7+1; x++){
+	 squares.push_back(std::pair<sf::Vector2f,size_t>(sf::Vector2f( x*7, y*7), 7 ));
+	 }
+	 }
+	 */
 	
-	for(unsigned int i = 0; i< max; i++){
-		if(i%2 == 0)
-			linesH[i].position = sf::Vector2f(0, i*7+1);
-		else
-			linesH[i].position = sf::Vector2f(700, (i-1)*7+1);
-	}
+	Grid<100> grid{700, 700 };
 	
-	for(unsigned int i = 0; i< max; i++){
-		if(i%2 == 0)
-			linesV[i].position = sf::Vector2f(i*window.getSize().x/100+1, 0 );
-		else
-			linesV[i].position = sf::Vector2f((i-1)*window.getSize().x/100+1, window.getSize().y );
-	}
-	//TODO: vertexArray from squares;
-
-	
-	
-	//std::vector<std::pair<sf::Vector2f coordinate top left, size_t size of square>> squares;
-	
-	for(size_t y = 0; y < window.getSize().x/7+1; y++){
-		for(size_t x = 0; x < window.getSize().x/7+1; x++){
-			squares.push_back(std::pair<sf::Vector2f,size_t>(sf::Vector2f( x*7, y*7), 7 ));
-		}
-	}
-	*/
-	
-	Grid<100> grid{};
-	auto v = grid.countNeighbours(0, 0);
 	/*for(auto i = 0; i< 10; i++){
-		
-		grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
-		grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
-		grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
-		
-		
-
-	}*/
-	/*int z = 45;
-	while(z--){
-		auto a = randomInt(0, 99);
-		auto b = randomInt(0, 99);
-
-		grid.setIndexState(a,b, Grid::State::ALIVE);
-		grid.setIndexState(a,b+1, Grid::State::ALIVE);
-		grid.setIndexState(a+1,b, Grid::State::ALIVE);
-		grid.setIndexState(a,b-1, Grid::State::ALIVE);
-	}
+	 
+	 grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
+	 grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
+	 grid.setIndexState(randomInt(0, 99), randomInt(0, 99), Grid::State::ALIVE);
+	 
+	 
+	 
+	 }*/
+//	int z = 45;
+//	 while(z--){
+//	 auto a = randomInt(0, 99);
+//	 auto b = randomInt(0, 99);
+//
+//	 grid.setIndexState(a,b, Grid::State::ALIVE);
+//	 grid.setIndexState(a,b+1, Grid::State::ALIVE);
+//	 grid.setIndexState(a+1,b, Grid::State::ALIVE);
+//	 grid.setIndexState(a,b-1, Grid::State::ALIVE);
+//	 }
 	
-*/
-//	grid.setIndexState(70,70, Grid::State::ALIVE);
-//	grid.setIndexState(71,71, Grid::State::ALIVE);
-//	grid.setIndexState(71,72, Grid::State::ALIVE);
-//	grid.setIndexState(70,72, Grid::State::ALIVE);
-//	grid.setIndexState(69,72, Grid::State::ALIVE);
-
-
-
+	
+	
+	
+	
+		grid.setIndexState(70,70, Grid<100>::State::ALIVE);
+		grid.setIndexState(71,71, Grid<100>::State::ALIVE);
+		grid.setIndexState(71,72, Grid<100>::State::ALIVE);
+		grid.setIndexState(70,72, Grid<100>::State::ALIVE);
+		grid.setIndexState(69,72, Grid<100>::State::ALIVE);
+	
+	
+	
 	/*
 	 ...***
 	 ...*..***
@@ -148,24 +151,34 @@ int main(int, char const**)
 	 */
 	
 	
+	float FramePerSecondes = 2.f;
 	
-
+	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	const sf::Time timePerFrame = sf::seconds(1.f/FramePerSecondes);
+	
 	while (window.isOpen()) {
 		
 		checkEvent(window,grid);
+		timeSinceLastUpdate += clock.restart();
 		
-		auto array = grid.pointToDraw();
-		auto a = grid.countNeighbours(91, 91);
 		
+		while (timeSinceLastUpdate > timePerFrame){
+			timeSinceLastUpdate = sf::Time::Zero;
+		
+			grid.computeNextIteration();
+			grid.commitChange();
+			
+		}
+	
+		auto array {grid.pointToDraw()};
 		window.clear(sf::Color::White);
 		window.draw(array);
-		//grid.computeNextIteration();
-		//grid.commitChange();
 		window.display();
 		
 		
 	}
-    return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
 
 /*
@@ -231,6 +244,6 @@ int main(int, char const**)
  // Update the window
  window.display();
  }
-
-
-*/
+ 
+ 
+ */
